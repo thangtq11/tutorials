@@ -15,11 +15,13 @@ public class SpringInjectionUnitTest {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         ConstructorApplication app = context.getBean(ConstructorApplication.class);
+
         assertThat(app.getMessageService()).isInstanceOf(FacebookService.class);
-        context.close();
+
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         ConstructorApplication appXML = (ConstructorApplication) applicationContext.getBean("ConstructorApplication");
+
         assertThat(appXML.getMessageService()).isInstanceOf(WhatsappService.class);
     }
 
@@ -28,11 +30,13 @@ public class SpringInjectionUnitTest {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         SetterApplication app = context.getBean(SetterApplication.class);
+
         assertThat(app.getMessageService()).isInstanceOf(WhatsappService.class);
-        context.close();
+
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         SetterApplication appXML = (SetterApplication) applicationContext.getBean("SetterApplication");
+
         assertThat(appXML.getMessageService()).isInstanceOf(WhatsappService.class);
     }
 
@@ -43,11 +47,13 @@ public class SpringInjectionUnitTest {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LookupMethodApplication lookupApp = (LookupMethodApplication) applicationContext.getBean("LookupMethodApplication");
+
         assertThat(lookupApp.createServiceFromAnnotation()).isInstanceOf(WhatsappService.class);
 
 
         ApplicationContext applicationXMLContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LookupMethodApplication lookupMethodXMLApplication = (LookupMethodApplication) applicationXMLContext.getBean("LookupMethodApplicationByXML");
+
         assertThat(lookupMethodXMLApplication.createServiceFromXML()).isInstanceOf(WhatsappService.class);
     }
 
